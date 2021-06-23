@@ -1,15 +1,15 @@
 <!--  
-(c) ISTVN
-2021-06-22
-CRUD para carrito de compras
+ISTVN
+2021-06-23
+CRUD
 
 Online WSDL 1.1 SOAP generator 0.2
 Julien Blitte
   -->
-<definitions xmlns:tns="http://localhost.wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://localhost.xsd" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" name="CRUD para carrito de compras" targetNamespace="http://localhost.wsdl">
+<definitions xmlns:tns="istvn.edu.ec.wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="istvn.edu.ec.xsd" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" name="CRUD" targetNamespace="istvn.edu.ec.wsdl">
 <!--  definition of datatypes  -->
 <types>
-<schema xmlns="http://www.w3.org/2000/10/XMLSchema" targetNamespace="http://localhost.xsd">
+<schema xmlns="http://www.w3.org/2000/10/XMLSchema" targetNamespace="istvn.edu.ec.xsd">
 <element name="nombre">
 <complexType>
 <all>
@@ -66,11 +66,26 @@ Julien Blitte
 </all>
 </complexType>
 </element>
+<element name="res2">
+<complexType>
+<all>
+<element name="value" type="string"/>
+</all>
+</complexType>
+</element>
+<element name="void">
+<complexType>
+<sequence/>
+</complexType>
+</element>
 </schema>
 </types>
 <!--  response messages  -->
 <message name="returns_res">
 <part name="res" type="xsd:res"/>
+</message>
+<message name="returns_res2">
+<part name="res2" type="xsd:res2"/>
 </message>
 <!--  request messages  -->
 <message name="insertar">
@@ -82,11 +97,18 @@ Julien Blitte
 <part name="telefono" type="xsd:telefono"/>
 <part name="direccion" type="xsd:direccion"/>
 </message>
+<message name="consultarTodos">
+<part name="void" type="xsd:void"/>
+</message>
 <!--  server's services  -->
 <portType name="CRUD">
 <operation name="insertar">
 <input message="tns:insertar"/>
 <output message="tns:returns_res"/>
+</operation>
+<operation name="consultarTodos">
+<input message="tns:consultarTodos"/>
+<output message="tns:returns_res2"/>
 </operation>
 </portType>
 <!--  server encoding  -->
@@ -101,10 +123,19 @@ Julien Blitte
 <soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
 </output>
 </operation>
+<operation name="consultarTodos">
+<soap:operation soapAction="urn:xmethods-delayed-quotes#consultarTodos"/>
+<input>
+<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</input>
+<output>
+<soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</output>
+</operation>
 </binding>
 <!--  access to service provider  -->
-<service name="ISTVN">
-<port name="ISTVN_0" binding="CRUD_webservices">
+<service name="CRUD">
+<port name="CRUD_0" binding="CRUD_webservices">
 <soap:address location="http://localhost/TiendaS/servicios/server.php"/>
 </port>
 </service>
